@@ -1,0 +1,60 @@
+{
+  "name": "pi-duckdb-search",
+  "version": "2.4.0",
+  "description": "DuckDB-powered BM25 keyword + semantic (ONNX embeddings) + hybrid (RRF) search over Pi session JSONL transcripts. Self-contained — no external APIs, no cloud accounts.",
+  "type": "module",
+  "license": "MIT",
+  "author": "cpagan",
+  "homepage": "https://pi.dev/packages/pi-duckdb-search",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cpagan/pi-duckdb-search.git"
+  },
+  "keywords": [
+    "pi-package",
+    "pi-extension",
+    "pi-coding-agent",
+    "search",
+    "duckdb",
+    "semantic-search",
+    "embeddings",
+    "bm25",
+    "full-text-search",
+    "session-search",
+    "vector-search",
+    "onnx"
+  ],
+  "files": [
+    "extensions/",
+    "duckdb-search-build.cjs",
+    "duckdb-search-test.cjs",
+    "README.md",
+    "LICENSE"
+  ],
+  "pi": {
+    "extensions": ["./extensions/duckdb-search.ts"]
+  },
+  "scripts": {
+    "test": "node duckdb-search-test.cjs",
+    "build": "node duckdb-search-build.cjs"
+  },
+  "dependencies": {
+    "@duckdb/node-api": "^1.5.6",
+    "@huggingface/transformers": "^4.3.0"
+  },
+  "peerDependencies": {
+    "@earendil-works/pi-coding-agent": "*",
+    "typebox": "*"
+  },
+  "peerDependenciesMeta": {
+    "@earendil-works/pi-coding-agent": {
+      "optional": false
+    },
+    "typebox": {
+      "optional": false
+    }
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}
