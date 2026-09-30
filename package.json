@@ -1,6 +1,6 @@
 {
   "name": "pi-duckdb-search",
-  "version": "2.4.0",
+  "version": "2.4.1",
   "description": "DuckDB-powered BM25 keyword + semantic (ONNX embeddings) + hybrid (RRF) search over Pi session JSONL transcripts. Self-contained — no external APIs, no cloud accounts.",
   "type": "module",
   "license": "MIT",
@@ -8,7 +8,7 @@
   "homepage": "https://pi.dev/packages/pi-duckdb-search",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/cpagan/pi-duckdb-search.git"
+    "url": "git+https://github.com/carpag/pi-duckdb-search.git"
   },
   "keywords": [
     "pi-package",
