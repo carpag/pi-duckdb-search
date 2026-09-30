@@ -198,7 +198,7 @@ async function checkExistingDatabase(): Promise<boolean> {
     state.lastBuilt = lastBuilt;
     state.error = null;
 
-    console.log(`[duckdb-search] Using existing database: ${entryCount} entries, ${sessionCount} sessions, embeddings: ${hasEmbs ? "ready" : "no"}`);
+    // Status bar message instead of console.log — avoids polluting the prompt area
     return true;
   } catch (e) {
     console.error("[duckdb-search] checkExistingDatabase failed:", e);
@@ -317,7 +317,7 @@ async function generateEmbeddings(): Promise<void> {
     return;
   }
 
-  console.log(`[duckdb-search] Generating embeddings for ${rows.length} entries...`);
+  // Embedding progress logged to status bar via ctx — silent in prompt area
 
   await conn.run(`CREATE TABLE IF NOT EXISTS _emb_temp (entry_id VARCHAR, embedding FLOAT[${EMBED_DIM}]);`);
   await conn.run("DELETE FROM _emb_temp;");
@@ -346,7 +346,7 @@ async function generateEmbeddings(): Promise<void> {
     }
 
     if ((i + batchSize) % 512 === 0 || i + batchSize >= rows.length) {
-      console.log(`[duckdb-search] Embedded ${Math.min(i + batchSize, rows.length)}/${rows.length}`);
+      // Embedding progress — silent (no console.log)
     }
   }
 
@@ -356,7 +356,7 @@ async function generateEmbeddings(): Promise<void> {
 
   state.hasEmbeddings = true;
   await setMetadata("has_embeddings", "true");
-  console.log(`[duckdb-search] Embeddings complete: ${rows.length} entries`);
+  // Embedding complete — silent (no console.log)
 }
 
 /**
@@ -392,8 +392,17 @@ function esc(s: string): string {
 
 export default function (pi: ExtensionAPI) {
   // Background build on session_start — loads DB before first search
-  pi.on("session_start", async () => {
-    ensureIndex().catch((e) => {
+  pi.on("session_start", async (_event, ctx) => {
+    ensureIndex().then((ok) => {
+      if (ok && state.entryCount > 0) {
+        try {
+          ctx.ui.setStatus("duckdb-search", `📚 ${state.entryCount} entries, ${state.sessionCount} sessions, embeddings: ${state.hasEmbeddings ? "ready" : "no"}`);
+          setTimeout(() => {
+            try { ctx.ui.setStatus("duckdb-search", undefined); } catch {}
+          }, 5000);
+        } catch {}
+      }
+    }).catch((e) => {
       console.error("[duckdb-search] background ensureIndex failed:", e);
     });
   });

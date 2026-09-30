@@ -1,7 +1,7 @@
 {
   "name": "pi-duckdb-search",
-  "version": "2.4.1",
-  "description": "DuckDB-powered BM25 keyword + semantic (ONNX embeddings) + hybrid (RRF) search over Pi session JSONL transcripts. Self-contained — no external APIs, no cloud accounts.",
+  "version": "2.4.2",
+  "description": "DuckDB-powered BM25 keyword + semantic (ONNX embeddings) + hybrid (RRF) search over Pi session JSONL transcripts. Self-contained \u2014 no external APIs, no cloud accounts.",
   "type": "module",
   "license": "MIT",
   "author": "cpagan",
@@ -32,7 +32,9 @@
     "LICENSE"
   ],
   "pi": {
-    "extensions": ["./extensions/duckdb-search.ts"]
+    "extensions": [
+      "./extensions/duckdb-search.ts"
+    ]
   },
   "scripts": {
     "test": "node duckdb-search-test.cjs",
