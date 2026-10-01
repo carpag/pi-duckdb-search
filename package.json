@@ -1,6 +1,6 @@
 {
   "name": "pi-duckdb-search",
-  "version": "2.4.2",
+  "version": "2.4.3",
   "description": "DuckDB-powered BM25 keyword + semantic (ONNX embeddings) + hybrid (RRF) search over Pi session JSONL transcripts. Self-contained \u2014 no external APIs, no cloud accounts.",
   "type": "module",
   "license": "MIT",
@@ -50,10 +50,10 @@
   },
   "peerDependenciesMeta": {
     "@earendil-works/pi-coding-agent": {
-      "optional": false
+      "optional": true
     },
     "typebox": {
-      "optional": false
+      "optional": true
     }
   },
   "engines": {
